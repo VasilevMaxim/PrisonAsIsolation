@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Temporary class.
+/// </summary>
 internal class BackgroundDisable : MonoBehaviour
 {
     [SerializeField] private Animation _disableAnimation;

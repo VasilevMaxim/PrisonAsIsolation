@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 
 public class Loader : ILoader
 {
     private const string Separator = "|";
+    private const string KeyNewId = "id ";
 
     public T Parse<T>(string textObj)
     {
@@ -21,13 +19,14 @@ public class Loader : ILoader
         if (File.Exists(path) == false)
             throw new FileLoadException();
 
+        // In the future, you can rewrite with LINQ.
         using (FileStream fstream = File.OpenRead(path))
         {
             byte[] dataSet = new byte[fstream.Length];
             fstream.Read(dataSet, 0, dataSet.Length);
             var dataSetText = Encoding.Default.GetString(dataSet);
             var textes = dataSetText.Split(Separator.ToCharArray());
-            var prefix = "id " + id;
+            var prefix = KeyNewId + id;
             
             bool isContains = false;
             List<string> rezult = new List<string>(0);

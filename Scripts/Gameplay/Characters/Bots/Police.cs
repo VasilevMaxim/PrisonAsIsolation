@@ -20,9 +20,9 @@ namespace Gameplay.Characters
         protected override CharacterFacade Facade => _facade;
         private CharacterFacade _facade;
 
-        protected override void Initialize(IMoveable moveable, IAnimatableCharacter animatable)
+        protected override void Initialize(IControl control, IMoveable moveable, IAnimatableCharacter animatable)
         {
-            _facade = new CharacterFacade(moveable, animatable);
+            _facade = new CharacterFacade(control, moveable, animatable);
             _storage = new Storage(_settings.Storage.Size);
         }
 
@@ -30,11 +30,11 @@ namespace Gameplay.Characters
         {
             base.OnEnable();
 
-            var management = new AIManagement(new TrafficRoute(transform, _paths), _zone);
-            var move = new MoveTranslate(management, transform, 1);
-            var animation = new AnimationCharacter(management, _animator, _settings.NamesAnimations);
+            var control = new AIControl(new TrafficRoute(transform, _paths), _zone);
+            var move = new MoveTranslate(control, transform, 1);
+            var animation = new AnimationCharacter(control, _animator, _settings.NamesAnimations);
 
-            Initialize(move, animation);
+            Initialize(control, move, animation);
         }
     }
 }

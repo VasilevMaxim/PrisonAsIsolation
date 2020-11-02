@@ -4,19 +4,23 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// It is used to print text as if on a keyboard.
+/// </summary>
 [RequireComponent(typeof(Text))]
 internal class TextPrint : MonoBehaviour
 {
     [SerializeField] private UnityEvent _exitWrite;
+
     [SerializeField] private string _nameSceneLoad;
-    [SerializeField] private float _period;
+    [SerializeField] private float _periodPrint;
     [SerializeField] private float _timeDelayAfterText;
 
-    private Text _text;
+    [Space]
+    [SerializeField] private Text _text;
 
     private void OnEnable()
     {
-        _text = GetComponent<Text>();
         StartCoroutine(Print());
     }
 
@@ -26,7 +30,7 @@ internal class TextPrint : MonoBehaviour
         _text.text = "";
         for(int i = 0; i < text.Length; i++)
         { 
-            yield return new WaitForSeconds(_period);
+            yield return new WaitForSeconds(_periodPrint);
             _text.text += text[i];
         }
 

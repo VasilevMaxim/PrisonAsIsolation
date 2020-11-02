@@ -1,4 +1,5 @@
 ﻿using Gameplay.Characters;
+using Interface;
 using System.Linq;
 using UnityEngine;
 
@@ -7,15 +8,32 @@ namespace Gameplay.Items
     [RequireComponent(typeof(BoxCollider2D))]
     internal class Door : Item
     {
-        [SerializeField] private SpriteRenderer _open;
-        [SerializeField] private SpriteRenderer _close;
+        [SerializeField] private SpriteRenderer _open, _close;
         [SerializeField] private int _idKey;
+        [SerializeField] private TimeOfDay _time;
+
         private bool _isOpen;
 
-        internal override void Interaction(Character character)
+        protected override void OnEnable()
         {
-            var isKey = character.Storage.Resources.Contains(new ResourceData(_idKey));
-            if (isKey == false)
+            base.OnEnable();
+            _time.OnNight += Close;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            _time.OnNight -= Close;
+        }
+
+        internal override void Interaction(IInteractable interactable)
+        {
+            var character = interactable as Character;
+            if (character == null)
+                return;
+
+            var isHaveKey = character.Storage.Resources.Contains(new ResourceData(_idKey));
+            if (isHaveKey == false)
             {
                 _hint?.NotPossible();
                 return;
@@ -23,31 +41,21 @@ namespace Gameplay.Items
 
             _isOpen = !_isOpen;
             if (_isOpen == true)
-            {
-                _open.gameObject.SetActive(true);
-                _close.gameObject.SetActive(false);
-            }
+                Open();
             else
-            {
-                _open.gameObject.SetActive(false);
-                _close.gameObject.SetActive(true);
-            }
+                Close();
 
         }
 
-        public void Open(bool state)
+        public void Open()
         {
-            _isOpen = state;
-            if (_isOpen == true)
-            {
-                _open.gameObject.SetActive(true);
-                _close.gameObject.SetActive(false);
-            }
-            else
-            {
-                _open.gameObject.SetActive(false);
-                _close.gameObject.SetActive(true);
-            }
+            _open.gameObject.SetActive(true);
+            _close.gameObject.SetActive(false);
+        }
+        public void Close()
+        {
+            _open.gameObject.SetActive(false);
+            _close.gameObject.SetActive(true);
         }
     }
 }

@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Дописывал в последние 2 часа, пропустите, пожалуйста, скрипт. Спасибо.
-// В ближайший коммит все исправлю.
-
-public class DefeatView : MonoBehaviour
+public class Defeat : MonoBehaviour
 {
     [SerializeField] private GameObject _parentDefeat;
     [SerializeField] private string _nameSceneFirst;
 
-    public void Defeat()
+    public void OnDefeat()
     {
         Time.timeScale = 0;
         _parentDefeat.SetActive(true);

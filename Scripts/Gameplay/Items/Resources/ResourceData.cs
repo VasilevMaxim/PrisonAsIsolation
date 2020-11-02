@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-internal struct ResourceData
+public struct ResourceData
 {
     public int Id => _id;
     // To save, no more.

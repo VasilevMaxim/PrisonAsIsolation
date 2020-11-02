@@ -5,6 +5,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider2D))]
 public class ZoneWinner : MonoBehaviour
 {
+    private const string WinName = "Win";
+
     [SerializeField] private UnityEvent _win;
     [SerializeField] private Animator _animatorPlayer;
 
@@ -18,6 +20,6 @@ public class ZoneWinner : MonoBehaviour
     private void Win()
     {
         _win.Invoke();
-        _animatorPlayer.SetBool("Win", true);
+        _animatorPlayer.SetBool(WinName, true);
     }
 }

@@ -15,7 +15,7 @@ internal class Path : MonoCached
 
     internal Vector2 GetNextPoint(Vector2 currentPoint, bool inversion = false)
     {
-        var indexCurrent = _points.FindIndex((point) => (Vector2)point.position == currentPoint);
+        var indexCurrent = _points.FindIndex((point) => (Vector2) point.position == currentPoint);
         var numberCompare = inversion ? 0 : _points.Count - 1;
 
         if (indexCurrent == numberCompare)
@@ -36,8 +36,9 @@ internal class Path : MonoCached
             return;
 
         Gizmos.color = Color.red;
-        for (int i = 1; i < _points.Count; i++)
-            Gizmos.DrawLine(_points[i - 1].position, _points[i].position);
 
+        for (int i = 1; i < _points.Count; i++)
+            if (_points[i] != null && _points[i - 1] != null)
+            Gizmos.DrawLine(_points[i - 1].position, _points[i].position);
     }
 }

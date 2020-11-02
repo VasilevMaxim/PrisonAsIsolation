@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System;
 using Gameplay.Characters;
+using Interface;
 
 namespace Gameplay.Items
 {
     internal abstract class Item : MonoCached
-    {
+    {      
+        internal abstract void Interaction(IInteractable interactable);
+
         public int Id => _id;
         [SerializeField] private int _id;
-
         [SerializeField] protected HintView _hint;
 
-        internal abstract void Interaction(Character character);
-        
         protected virtual void OnTriggerEnter2D(Collider2D obj)
         {
             Action(obj, true);
@@ -23,21 +23,15 @@ namespace Gameplay.Items
             Action(obj, false);
         }
 
-        protected void Action(Collider2D obj,  bool isOpenAccess)
+        protected void Action(Collider2D collider, bool isOpenAccess)
         {
-            var character = obj.GetComponent<IInteractable>();
-            if (character != null)
+            var interactable = collider.GetComponent<IInteractable>();
+            if (interactable != null)
             {
                 if (isOpenAccess == true)
-                {
-                    character.Interaction.OpenAccess();
-                    character.Interaction.ActionDelayed = Interaction;
-                }
+                    interactable.Interaction.ActionDelayed = (IInteractable ins) => Interaction(ins);
                 else
-                {
-                    character.Interaction.ExitAccess();
-                    character.Interaction.ActionDelayed = null;
-                }
+                    interactable.Interaction.ActionDelayed = null;
             }
         }
     }

@@ -6,34 +6,31 @@ namespace Gameplay.Characters.SubSystems
 {
     internal class MoveTranslate : IMoveable
     {
-        private readonly IManagement _management;
+        private readonly IControl _control;
         private readonly float _speed = 1;
-        private readonly IUpdate _managementUpdate;
         private readonly Transform _transform;
 
         /// <summary>
         /// Физическое движение
         /// </summary>
-        /// <param name="management">Способ управления движвением</param>
+        /// <param name="control">Способ управления движвением</param>
         /// <param name="rigidbody"></param>
         /// <param name="speed"></param>
-        internal MoveTranslate(IManagement management, Transform transform, float speed)
+        internal MoveTranslate(IControl control, Transform transform, float speed)
         {
-            if (management == null || transform == null)
+            if (control == null || transform == null)
                 throw new ArgumentNullException();
 
             _transform = transform;
-            _management = management;
+            _control = control;
             _speed = speed;
-            _managementUpdate = _management as IUpdate;
         }
 
         public void Move()
         {
-            if (_management.IsActive == true)
+            if (_control.IsActive == true)
             {
-                _transform.Translate(_management.Direction * _speed / 100);
-                _managementUpdate?.Update();
+                _transform.Translate(_control.Direction * _speed / 100);
             }
         }
     }

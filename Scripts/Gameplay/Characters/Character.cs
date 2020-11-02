@@ -8,7 +8,7 @@ namespace Gameplay.Characters
     /// Parent class for all characters in the game.
     /// </summary>
     [RequireComponent(typeof(CapsuleCollider2D))]
-    internal abstract class Character : MonoCached
+    public abstract class Character : MonoCached
     {
         // Components inspector.
         [SerializeField] protected Animator _animator;
@@ -20,7 +20,9 @@ namespace Gameplay.Characters
 
         // Facade pattern.
         protected abstract CharacterFacade Facade { get; }
-        protected abstract void Initialize(IMoveable moveable, IAnimatableCharacter animatable);
+        protected abstract void Initialize(IControl control, 
+                                           IMoveable moveable, 
+                                           IAnimatableCharacter animatable);
 
         #region MonoBehaviour
 

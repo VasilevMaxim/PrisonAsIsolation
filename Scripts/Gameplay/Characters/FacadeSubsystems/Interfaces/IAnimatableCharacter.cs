@@ -1,6 +1,6 @@
 ﻿namespace Gameplay.Characters.SubSystems
 {
-    internal interface IAnimatableCharacter
+    public interface IAnimatableCharacter
     {
         void MoveAnimate();
     }

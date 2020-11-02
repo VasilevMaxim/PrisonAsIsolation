@@ -11,23 +11,23 @@ namespace Gameplay.Characters
     {
         public IInteraction Interaction => _interaction;
 
-        // Components inspector.
-        [SerializeField] private PlayerSettings _settings;
-        [SerializeField] private ItemView _itemView;
-        [SerializeField] private HintView _hint;
-
-        protected override CharacterFacade Facade => _facade;
-
         internal override Storage Storage => _storage;
         private Storage _storage;
 
+        // Components inspector.
+        [SerializeField] private PlayerSettings _settings;
+        [SerializeField] private TimeOfDay _time;
+
+        protected override CharacterFacade Facade => _facade;
         private CharacterFacade _facade;
+
         private PlayerInteraction _interaction;
         private InputData _input;
-
-        protected override void Initialize(IMoveable moveable, IAnimatableCharacter animatable)
+        private Vector3 _startPosition;
+        
+        protected override void Initialize(IControl control, IMoveable moveable, IAnimatableCharacter animatable)
         {
-            _facade = new CharacterFacade(moveable, animatable);
+            _facade = new CharacterFacade(control, moveable, animatable);
             _storage = new Storage(_settings.Storage.Size);
         }
 
@@ -36,28 +36,30 @@ namespace Gameplay.Characters
             base.OnEnable();
 
             _input = new InputData();
-            _interaction = new PlayerInteraction(_input.Player.Interaction, this, _hint);
-            var management = new InputManagement(_input.Player.Move);
-            var move = new MoveTranslate(management, transform, _settings.Speed);
-            var animation = new AnimationCharacter(management, _animator, _settings.NamesAnimations);
 
-            Initialize(move, animation);
+            _interaction = new PlayerInteraction(_input.Player.Interaction);
+            var control = new InputControl(_input.Player.Move);
+            var move = new MoveTranslate(control, transform, _settings.Speed);
+            var animation = new AnimationCharacter(control, _animator, _settings.NamesAnimations);
+
+            Initialize(control, move, animation);
 
             _input.Enable();
 
-            Storage.Change += StorageChange;
+            _time.OnDay += RelocateStartPosition;
+            _time.OnNight += RelocateStartPosition;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
             _input.Disable();
+
+            _time.OnDay -= RelocateStartPosition;
+            _time.OnNight -= RelocateStartPosition;
         }
 
-        private void StorageChange(ResourceData[] resources)
-        {
-            var sprites = resources.Select(resource => _settings.Resources.GetSprite(resource.Id));
-            _itemView.SetItems(sprites);
-        }
+        private void RelocateStartPosition() =>
+            transform.position = _startPosition;
 
 
         // A save might look like this. Implement the interface ISaveable

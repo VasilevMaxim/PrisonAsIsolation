@@ -1,6 +1,6 @@
 ﻿using Gameplay.Characters;
-using System;
 using UnityEngine;
+
 namespace Gameplay.Items
 {
     [RequireComponent(typeof(BoxCollider2D))]
@@ -14,34 +14,46 @@ namespace Gameplay.Items
             _storage = new Storage(1);
         }
 
-        internal override void Interaction(Character player)
+        internal override void Interaction(IInteractable interactable)
         {
-            if (player.Storage.IsFree() == false)
+            var character = interactable as Character;
+            if (character == null)
+                return;
+
+            if (character.Storage.IsFree() == false)
             {
                 if (_storage.IsFull() == true)
                 {
-                    _hint.NotPossible();
+                     _hint.NotPossible();
                     return;
                 }
 
-                var resource = player.Storage.PopFirstOccupied();
-                _storage.PushFirstFree(resource);
-
-                _hint.Transfer();
+                Transfer(character);
             }
             else
             {
                 if (_storage.IsFree() == true)
                 {
-                    _hint.NotPossible();
+                   _hint.NotPossible();
                     return;
                 }
-
-                var resource = _storage.PopFirstOccupied();
-                player.Storage.PushFirstFree(resource);
-
-                _hint.Receive();
+                
+                Receive(character);
             }
+        }
+
+        private void Receive(Character character)
+        {
+            var resource = _storage.PopFirstOccupied();
+            character.Storage.PushFirstFree(resource);
+            _hint.Receive();
+        }
+
+        private void Transfer(Character character)
+        {
+            var resource = character.Storage.PopFirstOccupied();
+            _storage.PushFirstFree(resource);
+            _hint.Transfer();
         }
     }
 }   

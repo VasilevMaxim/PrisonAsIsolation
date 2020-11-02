@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Gameplay.Characters.SubSystems
 {
-    internal interface IManagement
+    public interface IControl
     {
-        event Action Start;
-        event Action Cancel;
+        event Action Start, Cancel;
         bool IsActive { get; }
         Vector2 Direction { get; }
+        void Check();
     }
 }

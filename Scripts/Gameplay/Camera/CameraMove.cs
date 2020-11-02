@@ -6,6 +6,7 @@ public class CameraMove : MonoCached
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _speed;
+
     private float _positionZEnable;
 
     protected override void OnEnable()
@@ -27,6 +28,7 @@ public class CameraMove : MonoCached
     {
        return Vector2.Lerp(transform.position, _target.position, Time.deltaTime * _speed);
     }
+
     private void ResetAxisZ()
     {
         var position = transform.position;

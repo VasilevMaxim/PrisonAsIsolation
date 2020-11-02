@@ -2,7 +2,8 @@
     "name": "UI",
     "references": [
         "GUID:e620d3d9dca82e948a64f3d57afdab59",
-        "GUID:6bfeab62d79ab3047af488bf7291a8ec"
+        "GUID:2b5e39eb21c2f9949a874b583d17b047",
+        "GUID:983326607efe7c2428b3106fb0a1ba3d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -2,13 +2,15 @@
 
 namespace Gameplay.Characters
 {
-    internal class CharacterFacade : IUpdate, IFixedUpdate
+    public class CharacterFacade : IUpdate, IFixedUpdate
     {
         internal IMoveable _moveable;
         internal IAnimatableCharacter _animatable;
+        internal IControl _control;
 
-        internal CharacterFacade(IMoveable moveable, IAnimatableCharacter animatable)
+        internal CharacterFacade(IControl control, IMoveable moveable, IAnimatableCharacter animatable)
         {
+            _control = control;
             _moveable = moveable;
             _animatable = animatable;
         }
@@ -20,6 +22,7 @@ namespace Gameplay.Characters
 
         public void Update()
         {
+            _control.Check();
             _animatable.MoveAnimate();
         }
     }

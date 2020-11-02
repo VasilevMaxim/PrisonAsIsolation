@@ -8,7 +8,7 @@ namespace Gameplay.Items
     {
         [SerializeField] private uint _health;
 
-        internal override void Interaction(Character player)
+        internal override void Interaction(IInteractable interactable)
         {
             _health--;
             if (_health == 0)

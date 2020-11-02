@@ -1,8 +1,6 @@
 {
     "name": "Data",
-    "references": [
-        "GUID:5e88e82e7b84f5f448024611b4777ede"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

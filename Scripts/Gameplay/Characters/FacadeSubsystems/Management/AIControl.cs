@@ -3,27 +3,25 @@ using UnityEngine;
 
 namespace Gameplay.Characters.SubSystems
 {
-    internal class AIManagement : IManagement, IUpdate
+    internal class AIControl : IControl
     {
-        public bool IsActive => true;
-        public event Action Start;
-        public event Action Cancel;
-
+        public event Action Start, Cancel; 
+        
         public Vector2 Direction { get; private set; }
+        public bool IsActive => true;
 
         private ITrafficRoute _trafficRoute;
         private IDetectable _detectable;
         private bool _isBindToTarget;
 
-
-        internal AIManagement(ITrafficRoute trafficRoute, IDetectable detectable = null)
+        internal AIControl(ITrafficRoute trafficRoute, IDetectable detectable = null)
         {
             _trafficRoute = trafficRoute;
             _detectable = detectable;
             Initialize();
         }
 
-        public void Update()
+        public void Check()
         {
             if (_isBindToTarget == false)
                 Direction = _trafficRoute.Direction;

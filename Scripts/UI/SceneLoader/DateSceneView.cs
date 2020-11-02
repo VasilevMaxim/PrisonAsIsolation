@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DateSceneView : MonoBehaviour
+internal class DateSceneView : MonoBehaviour
 {
     [SerializeField] private DateView _view;
     [Range(1, 30)] [SerializeField] private int _day;
@@ -21,8 +21,6 @@ public class DateSceneView : MonoBehaviour
     }
 
     private Coroutine _timer;
-    private bool _isNight = true;
-
     private void Awake()
     {
         DateGame = new DateTime(1967, 10, _day, 8, 3, 0);

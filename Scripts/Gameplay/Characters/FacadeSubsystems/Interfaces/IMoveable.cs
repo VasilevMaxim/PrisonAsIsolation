@@ -1,6 +1,6 @@
 ﻿namespace Gameplay.Characters.SubSystems
 {
-    internal interface IMoveable
+    public interface IMoveable
     {
         void Move();
     }

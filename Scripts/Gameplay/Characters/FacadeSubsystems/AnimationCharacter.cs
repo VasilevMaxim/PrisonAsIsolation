@@ -9,11 +9,11 @@ namespace Gameplay.Characters.SubSystems
     {
         private Animator _animator;
         private NamesAnimationsCharacter _names;
-        private IManagement _management;
+        private IControl _control;
 
-        internal AnimationCharacter(IManagement management, Animator animator, NamesAnimationsCharacter names)
+        internal AnimationCharacter(IControl control, Animator animator, NamesAnimationsCharacter names)
         {
-            _management = management;
+            _control = control;
             _animator = animator;
             _names = names;
 
@@ -22,7 +22,7 @@ namespace Gameplay.Characters.SubSystems
 
         private void Initialize()
         {
-            _management.Cancel += () =>
+            _control.Cancel += () =>
             {
                 _animator.SetFloat(_names.X, 0);
                 _animator.SetFloat(_names.Y, 0);
@@ -31,14 +31,14 @@ namespace Gameplay.Characters.SubSystems
 
         public void MoveAnimate()
         {
-            var direction = _management.Direction;
+            var direction = _control.Direction;
             _animator.SetFloat(_names.X, direction.x);
             _animator.SetFloat(_names.Y, direction.y);
         }
 
         public void Update()
         {
-            if (_management.IsActive == true)
+            if (_control.IsActive == true)
                 MoveAnimate();
         }
     }
