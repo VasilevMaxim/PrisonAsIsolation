@@ -1,6 +1,4 @@
-[![C#](https://img.shields.io/badge/Code%20Style-C%23-blueviolet)](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md)
-
-# Тюрьма как изоляция
+# Тюрьма как изоляция [![C#](https://img.shields.io/badge/Code%20Style-C%23-blueviolet)](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md)
 Прототип игры написан спецально для [Джема от народа.](https://dtf.ru/s/superjam)  
 Спасибо, что зашли на мою странцу Github.
 Немного прокомментирую код .
