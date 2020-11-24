@@ -1,4 +1,4 @@
-# Тюрьма как изоляция [![C#](https://img.shields.io/badge/Code%20Style-C%23-blueviolet)](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md)
+# Победитель конкурса "Лучший исходный код игры в Unity". Конкурс "Джем от народа" [![C#](https://img.shields.io/badge/Code%20Style-C%23-blueviolet)](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md)
 Прототип игры написан специально для [Джема от народа.](https://dtf.ru/s/superjam)  
 Спасибо, что зашли на мою страницу Github. В случае необходимости, Вы всегда сможете посмотреть код на момент публикации игры.
 Немного прокомментирую код. 
